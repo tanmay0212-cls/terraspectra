@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools>=65.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "terraspectra"
+version = "0.1.0"
+description = "TerraSpectra: Hyperspectral Crop Stress Anomaly Detection and Spatial Disease Mapping"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "TerraSpectra Contributors" }
+]
+# Core local runtime & inference dependencies (zero heavy/untrusted GPU DLL requirements)
+dependencies = [
+    "numpy>=1.24.0",
+    "scipy>=1.10.0",
+    "pandas>=2.0.0",
+    "scikit-learn>=1.3.0",
+    "opencv-python>=4.8.0",
+    "tifffile>=2023.1.1",
+    "onnxruntime>=1.16.0",
+    "fastapi>=0.100.0",
+    "uvicorn>=0.23.0",
+    "pydantic>=2.0.0",
+    "pyyaml>=6.0",
+    "psutil>=5.9.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "httpx>=0.24.0",
+]
+# Optional deep learning training dependencies for verified environments (e.g. Linux / WSL2 / Docker container)
+training = [
+    "torch>=2.0.0",
+    "torchvision>=0.15.0",
+    "timm>=0.9.0",
+]
+# Optional heavy geospatial C-extension dependencies
+geospatial = [
+    "rasterio>=1.3.0",
+    "geopandas>=0.13.0",
+]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q --import-mode=importlib"
+testpaths = [
+    "tests",
+]
+pythonpath = [
+    "src"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]

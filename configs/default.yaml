@@ -1,0 +1,49 @@
+# TerraSpectra Default Configuration
+# Generated in Phase 1 (Foundation Scaffold)
+
+data:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  benchmarks_dir: data/benchmarks
+  expected_bands: null
+  spectral_range_nm: null
+  patch_size: 16
+  stride: 16
+  train_ratio: 0.70
+  val_ratio: 0.15
+  test_ratio: 0.15
+  spatial_split_strategy: disjoint_blocks
+  random_seed: 42
+
+preprocess:
+  pca_components: 20
+  normalize_reflectance: true
+  remove_water_absorption_bands: false
+  bad_band_ranges_nm:
+    - [1350.0, 1420.0]
+    - [1800.0, 1960.0]
+
+model:
+  architecture: pca_baseline
+  num_classes: 16
+  in_channels: 20
+  dropout: 0.2
+  checkpoint_dir: models/checkpoints
+  onnx_dir: models/onnx
+
+training:
+  batch_size: 8
+  learning_rate: 0.001
+  num_epochs: 30
+  device: cpu
+  mixed_precision: false
+
+api:
+  host: "127.0.0.1"
+  port: 8000
+  title: "TerraSpectra Geospatial Inference API"
+  version: "0.1.0"
+  max_upload_size_bytes: 524288000
+  allowed_origins:
+    - "http://localhost:5173"
+    - "http://127.0.0.1:5173"
